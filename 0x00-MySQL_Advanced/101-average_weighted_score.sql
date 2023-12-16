@@ -1,6 +1,6 @@
 -- Create a stored procedure ComputeAverageWeightedScoreForUsers
 DELIMITER //
-
+DROP PROCEDURE IF EXISTS ComputeAverageWeightedScoreForUsers;
 CREATE PROCEDURE ComputeAverageWeightedScoreForUsers()
 BEGIN
     DECLARE done INT DEFAULT FALSE;
