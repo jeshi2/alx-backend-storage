@@ -3,6 +3,7 @@
 list student average score
 """
 
+
 def top_students(mongo_collection: Collection) -> List[dict]:
     """
     Returns all students sorted by average score.
