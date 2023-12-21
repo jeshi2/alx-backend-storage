@@ -4,26 +4,16 @@ list student average score
 """
 
 
-def top_students(mongo_collection: Collection) -> List[dict]:
+def top_students(mongo_collection):
     """
-    Returns all students sorted by average score.
+    returns all students sorted by average score
+    :param mongo_collection:
+    :return:
     """
-    pipeline = [
-        {
-            "$project": {
-                "_id": 1,
-                "name": 1,
-                "averageScore": {
-                    "$avg": "$topics.score"
-                }
-            }
-        },
-        {
-            "$sort": {
-                "averageScore": -1
-            }
-        }
-    ]
-
-    students = list(mongo_collection.aggregate(pipeline))
-    return students
+    return mongo_collection.aggregate([
+        {"$project": {
+            "name": "$name",
+            "averageScore": {"$avg": "$topics.score"}
+        }},
+        {"$sort": {"averageScore": -1}}
+    ])
