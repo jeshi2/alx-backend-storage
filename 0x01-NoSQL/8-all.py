@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-""" 8-all """
-from pymongo.collection import Collection
-from typing import List
+""" list all document in mongodb """
 
 
-def list_all(mongo_collection: Collection) -> List[dict]:
+def list_all(mongo_collection):
     """
     Lists all documents in a MongoDB collection.
 
     Returns:
         List[dict]: A list containing all documents in the collection.
     """
-    documents = list(mongo_collection.find())
-    return documents
+    return mongo_collection.find()
