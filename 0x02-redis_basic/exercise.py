@@ -103,17 +103,19 @@ class Cache:
         """
         return self.get(key, fn=int)
 
-    def replay(self, method: Callable) -> None:
+    def replay(self, method: Callable):
         """
-        Display the history of calls for a particular function
-        :param method: The method for which the history is displayed
+        Display the history of calls of a particular function
+        :param method: The method to display the history for
         """
-        inputs_key = "{}:inputs".format(method.__qualname__)
-        outputs_key = "{}:outputs".format(method.__qualname__)
+        method_name = method.__qualname__
+        inputs_key = "{}:inputs".format(method_name)
+        outputs_key = "{}:outputs".format(method_name)
 
         inputs = self._redis.lrange(inputs_key, 0, -1)
         outputs = self._redis.lrange(outputs_key, 0, -1)
 
-        print(f"{method.__qualname__} was called {len(inputs)} times:")
-        for args, output in zip(inputs, outputs):
-            print(f"{method}(*{args.decode('utf-8')}) -> {output.decode('utf-8')}")
+        print("{} was called {} times:".format(method_name, len(inputs)))
+
+        for input_args, output in zip(inputs, outputs):
+            print("{} -> {}".format(method_name + input_args.decode('utf-8'), output.decode('utf-8')))
