@@ -118,4 +118,6 @@ class Cache:
         print("{} was called {} times:".format(method_name, len(inputs)))
 
         for input_args, output in zip(inputs, outputs):
-            print("{} -> {}".format(method_name + input_args.decode('utf-8'), output.decode('utf-8')))
+            print("{} -> {}" .format(method_name +
+                                     input_args.decode('utf-8'),
+                                     output.decode('utf-8')))
