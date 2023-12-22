@@ -102,3 +102,18 @@ class Cache:
         :return: The retrieved integer data
         """
         return self.get(key, fn=int)
+
+    def replay(self, method: Callable) -> None:
+        """
+        Display the history of calls for a particular function
+        :param method: The method for which the history is displayed
+        """
+        inputs_key = "{}:inputs".format(method.__qualname__)
+        outputs_key = "{}:outputs".format(method.__qualname__)
+
+        inputs = self._redis.lrange(inputs_key, 0, -1)
+        outputs = self._redis.lrange(outputs_key, 0, -1)
+
+        print(f"{method.__qualname__} was called {len(inputs)} times:")
+        for args, output in zip(inputs, outputs):
+            print(f"{method}(*{args.decode('utf-8')}) -> {output.decode('utf-8')}")
